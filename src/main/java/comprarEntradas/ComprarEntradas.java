@@ -41,28 +41,63 @@ public class ComprarEntradas extends HttpServlet {
 		}
 		Vector buylist = (Vector) session.getValue("compras.shoppingcart");
 		String action = req.getParameter("action");
-		if (action.equals("ADD")) {
-			boolean match = false;
-			entradas e = getEntradas(req);
-			if (buylist == null) {
-				buylist = new Vector();
-				buylist.addElement(e);
-			} else {
-				for (int i = 0; i < buylist.size(); i++) {
-					entradas en = (entradas) buylist.elementAt(i);
-					en.setCantidad(en.getCantidad() + e.getCantidad());
-					buylist.setElementAt(en, i);
-					match = true;
+
+		if (action.equals("CHECKOUT")) {
+			float total = 0;
+			for (int i = 0; i < buylist.size(); i++) {
+				entradas e = (entradas) buylist.elementAt(i);
+				if (e.isEstado() == true) {
+					buylist.removeElementAt(i);
+					i--;
+				} else {
+					e.setEstado(true);
+					float price = e.getPrecio();
+					int qty = e.getCantidad();
+					total += (price * qty);
 				}
-				if (!match)
-					buylist.addElement(e);
 			}
+			total += 0.005;
+			String amount = new Float(total).toString();
+			int n = amount.indexOf('.');
+			amount = amount.substring(0, n + 3);
+			req.setAttribute("amount", amount);
+			String url = "/validar.jsp";
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher(url);
+			rd.forward(req, res);
+		} else {
+
+			if (action.equals("DELETE")) {
+				String del = req.getParameter("delindex");
+				int d = (new Integer(del)).intValue();
+				buylist.removeElementAt(d);
+			}
+
+			if (action.equals("ADD")) {
+				boolean match = false;
+				entradas e = getEntradas(req);
+				if (buylist == null) {
+					buylist = new Vector();
+					buylist.addElement(e);
+				} else {
+					for (int i = 0; i < buylist.size(); i++) {
+						entradas en = (entradas) buylist.elementAt(i);
+						if (en.getNombre_concierto().equals(e.getNombre_concierto()) && en.getTipo().equals(e.getTipo())) {
+							en.setCantidad(en.getCantidad() + e.getCantidad());
+							buylist.setElementAt(en, i);
+							match = true;
+						}
+					}
+					if (!match)
+						buylist.addElement(e);
+				}
+			}
+			session.putValue("compras.shoppingcart", buylist);
+			String url = "/comprar.jsp";
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher(url);
+			rd.forward(req, res);
 		}
-		session.putValue("compras.shoppingcart", buylist);
-		String url = "/comprar.jsp";
-		ServletContext sc = getServletContext();
-		RequestDispatcher rd = sc.getRequestDispatcher(url);
-		rd.forward(req, res);
 	}
 
 	private entradas getEntradas(HttpServletRequest req) {
@@ -72,9 +107,11 @@ public class ComprarEntradas extends HttpServlet {
 		entradas e = new entradas();
 		e.setEstado(false);
 		e.setId_entrada(-1);
+		t.nextToken();
 		e.setNombre_concierto(t.nextToken());
 		e.setTipo(t.nextToken());
-		e.setCantidad(qty);
+		e.setCantidad(Integer.parseInt(qty));
+		e.setPrecio(1.0f);
 		return e;
 	}
 

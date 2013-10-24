@@ -5,7 +5,10 @@ public class entradas {
 	private String nombre_concierto;
 	private boolean estado;
 	private String tipo;
-	private String cantidad;
+	private int cantidad;
+	private float precio;
+	
+	
 
 	public int getId_entrada() {
 		return id_entrada;
@@ -39,12 +42,20 @@ public class entradas {
 		this.tipo = tipo;
 	}
 
-	public String getCantidad() {
+	public int getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(String cantidad) {
+	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(float precio) {
+		this.precio = precio;
 	}
 
 }

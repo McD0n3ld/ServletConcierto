@@ -31,7 +31,7 @@
 						<%=e.getId_entrada()%> | 
 						<%=e.getNombre_concierto()%> |
 						
-						<%=e.getTipo() %> 
+						<%=e.getTipo() %> |
 						</option>
 						<%						
 					}

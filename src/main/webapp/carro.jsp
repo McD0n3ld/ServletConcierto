@@ -6,7 +6,7 @@
 <center>
 	<table border="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">
 		<tr>
-			<td><b>ID_ENTRADA</b></td>
+			<td><b>CANTIDAD</b></td>
 			<td><b>NOMBRE CONCIERTO</b></td>
 			<td><b>ESTADO</b></td>
 			<td><b>TIPO</b></td>
@@ -17,7 +17,7 @@
 					entradas anOrder = (entradas) buylist.elementAt(index);
 		%>
 		<tr>
-			<td><b><%=anOrder.getId_entrada()%></b></td>
+			<td><b><%=anOrder.getCantidad()%></b></td>
 			<td><b><%=anOrder.getNombre_concierto()%></b></td>
 			<td><b><%=anOrder.isEstado()%></b></td>
 			<td><b><%=anOrder.getTipo()%></b></td>
@@ -35,7 +35,7 @@
 		%>
 	</table>
 	<p>
-	<form name="checkoutForm" action="/ShoppingServlet/ShoppingServlet"
+	<form name="checkoutForm" action="/ServletConcierto/ComprarEntradas"
 		method="POST">
 		<input type="hidden" name="action" value="CHECKOUT"> <input
 			type="submit" name="Checkout" value="Checkout">
