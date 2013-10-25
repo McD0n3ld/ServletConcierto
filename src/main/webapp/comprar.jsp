@@ -36,18 +36,9 @@
 						<%						
 					}
 				%>
-				<!-- <option>La tortilla | VIP</option>
-				<option>La tortilla | grada</option>
-				<option>La tortilla | general</option>
-				<option>el macarron | VIP</option>
-				<option>el macarron | grada</option>
-				<option>el macarron | general</option>
-				<option>ROC riendose | VIP</option>
-				<option>ROC riendose | general</option>
-				<option>ROC riendose | grada</option>-->
 			</select> <b>Cantidad: </b><input type="text" name="cantidad" SIZE="3" value=1>
 			<input type="hidden" name="action" value="ADD"> <input
-				type="submit" name="Submit" value="Añadir al carro">
+				type="submit" name="Submit" value="Aï¿½adir al carro">
 		</form>
 	</center>
 	<p>
