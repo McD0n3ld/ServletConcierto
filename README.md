@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS entradas (
   id_concierto int NOT NULL,
   estado boolean,
   id_tipo varchar(90) DEFAULT NULL,
+  cantidad int NOT NULL,
   PRIMARY KEY (id_entrada),
   FOREIGN KEY (id_concierto) REFERENCES conciertos(id_concierto) ON DELETE CASCADE
 );
